@@ -27,6 +27,7 @@ public class UserServiceImpl implements UserService{
 
         userEntity.setEncryptedPassword("test");
 
+
         String PublicUserId = utils.generateUserId(10);
         userEntity.setUserId(PublicUserId);
 
@@ -39,4 +40,17 @@ public class UserServiceImpl implements UserService{
 
         return returnValue;
     }
+
+    @Override
+    public UserDto getUserByUserId(String userId) {
+        UserDto returnValue = new UserDto();
+
+        UserEntity userEntity = userRepository.findByUserId(userId);
+
+        BeanUtils.copyProperties(userEntity, returnValue);
+
+        return  returnValue;
+    }
+
+
 }

@@ -11,14 +11,19 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 public class UserController {
-
-
     @Autowired
     private UserServiceImpl userService;
 
-    @RequestMapping(method = RequestMethod.GET, value = "/getusers")
-    public String getUser(){
-        return "Get User";
+    @RequestMapping(method = RequestMethod.GET, value = "/getusers/{id}")
+    public UserRest getUser(@PathVariable String id){
+
+        UserRest returnValue = new UserRest();
+
+        UserDto userDto = userService.getUserByUserId(id);
+
+        BeanUtils.copyProperties(userDto, returnValue);
+
+        return returnValue;
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "/setuser")
